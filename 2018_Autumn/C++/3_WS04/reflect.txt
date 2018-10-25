@@ -1,0 +1,28 @@
+1) What is a safe empty state? Could you define a safe empty state that dif-fers from the empty state that you defined?
+- Safe empty state is well-defined object's data member, preventing to misbehave or be misinterpreted.
+Only empty state doesn't guarantee the data member stored safely without any errors.
+
+2) Identify the parts of your source code where to minimized code duplica-tion.
+- make set() function to set the data members as safe empty state, and used the function
+to get rid of redundancy of codes.
+
+3) The canTravelWith(...) member function accesses the private data of the object referenced in its parameter. Explain why C++ allows this access.
+- Becase the "private" is for other "class" not "instance". So as long as they are object from same class, possible to use private data members.
+
+4) What statement did you add to ensure that the strncpy(...) function ex-ecutes correctly?
+- Add '\0' (null terminator) to very last index of the string.
+
+5) Explain what you have learned in this workshop.
+- The name of data member and member function can't be same, should be distinguished.
+And put null terminator separately end of string when we us strncpy is important.
+Alsp, it was a good time to know the difference between 'nullptr' and 0 or '\0'.
+
+Quiz 4 Refleciton
+
+3. What is the purpose of declaring data members as private?
+- Preventing to be changed directly by client unintentionally.
+
+5.
+Wrong answer: 3.2.1. $$$C++, 707
+Right answer: 3.2.3.1. $$$C++, 707
+-> Forgot to check the cout of set() again when the object 'two' was created.

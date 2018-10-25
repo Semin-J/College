@@ -1,0 +1,29 @@
+1. The operator+ returns a Fraction object. Explain why this operator should not return a reference to a Fraction object.
+- Because the result of addition doesn't affect to real object's data members.
+On the other hand, operator += return a reference of Fraction object, because the result of the += addition affect to real object's data members.
+
+2. List the temporary objects in the w5_at_home.cpp main module.
+- (a+b), (b+d). They weren't assigned to any other objects.
+
+3. List the simplifications that you made to your class to minimize code du-plication.
+- void safe_set(); -> to set data members in safe empty state.
+
+4. Explain what you have learned in this workshop.
+- How to deal with overloading of member operators. Furthermore, now get used to use
+this keyword and making class and dealing with data members freely.
+
+Quiz 4&5 Reflection
+4-3. What is the purpose of a constructor?
+- Initialize data members of an object safely.
+
+5-1. What is the difference between a helper function and a member function?
+- Helper function has information from public member functions of the class, so it doesn't require access to the private data members.
+
+5-3.
+OUPUT:
+3.2.3.1.$$$C++, 707
+$$$xyz, 10
+-> didn't check destructor
+-> need to be added
+~xyz: xyz
+~xyz: C++

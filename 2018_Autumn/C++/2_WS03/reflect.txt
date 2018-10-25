@@ -1,0 +1,29 @@
+1) How many elements are there in each C-style character string that stores a family or given name
+for the account? Why?
+- 41 includes null terminator. 40 is for real characters(elements of name) + 1 is for '\0' 
+
+
+2) Your class declares two member functions named set(...).  In C, this would generate an error. 
+Name the feature of C++ that allows this.
+- Function Overloading in C++. C++ compiler check not only the name of function,
+but also the type of parameters.
+
+
+3) What have you learned in completing this workshop?
+- How to do Casting string to integer, integer to string. Also could know atoi() and itoa()
+for casting are old and not standard function. so I used to_string() and just each character-48
+by ascii code for character to integer.
+
+
+Quiz 2 Reflection
+3. Write down a piece of C++ code that a) allocates memory, b) stores the string "OOP244"
+and deallocates the memory storage.
+
+char* mem = new char [7];
+-->strcpy(mem, "OOP244");
+delete[] mem;
+mem = nullptr;
+return 0;
+
+-Reason: I assigned to empty string ' mem = "OOP244" ' like this.
+	However, to assign the string after the declaration, need to use strcpy function.

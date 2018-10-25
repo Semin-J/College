@@ -1,0 +1,44 @@
+1) Why do you need to allocate new dynamic memory when you increase the size of an existing array
+of dynamically allocated memory?
+
+- Because existing array has already dynamically allocated certain size of memory. So there is no memory
+space to be added. So to increase the size of array, we need to make new dynamic memory for new size array.
+
+
+2) The Kingdom structure stores the name of the kingdom in an array of characters.
+At the end of the program, we do not use the delete operator to deallocate the memory occupied
+by the name itself. Why don¡¯t we need to use the delete e operator on this array itself?
+
+- Because we allocated the memory for the whole Kigdom structure, not for the only name in
+the Kingdom structure. So when we deallocate the memory for the whole Kingdome structure,
+the name array part also deallocated as a whole.
+
+
+3) There are two display(...) function definitions.
+How does the compiler know which definition to call from your main function?
+
+- As we include the "Kingdom.h" header file, preprocessor already implemented
+"Kingdom.cpp" file's contents already ahead of main, and C++ compiler check not only
+the name of the function, but also the number and type or parameters.
+That's why we can use function overloading, not likely C.
+
+4) Describe what have you have learned in this workshop.
+
+- When we do dynamic memory allocation, even we copy the address of the pointed object for
+dynamic memory though, original pointer should be assigned by nullptr, before
+it would be deallocated. If we deallocate the original pointer first, even if we copy
+the address of the object to another pointer variable, the object is deleted.
+
+
+Quiz 1 Reflection: 
+
+3. Complete the source code of main_app.cpp
+Answer:
+
+#include <iostream>
+#include "hello.h"
+using namespace std;
+using namespace sict;
+
+-> I didn't include "using namespace sict;" 
+In the code, the function called "foo()" should be "sict::foo()", without using namespace globally.
