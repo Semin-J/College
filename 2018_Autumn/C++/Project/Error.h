@@ -9,12 +9,12 @@ namespace aid {
   class Error {
     char* m_error;
     void setter(const char* error_src);
+    void safeEmpty();
   public:
     explicit Error(const char* error_src = nullptr);
     Error(const Error& em) = delete;
     Error& operator=(const Error& em) = delete;
     virtual ~Error();
-    void safeEmpty();
     void clear();
     bool isClear() const;
     void message(const char* str);
