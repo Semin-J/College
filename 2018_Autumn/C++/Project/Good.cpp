@@ -30,15 +30,11 @@ namespace aid {
     }
     else {
       if (size < max_name_length) {
-        //if (m_name != nullptr) delete[] m_name; //would it be problem?
-        m_name = nullptr; //needed?
         m_name = new char[size + 1];
         strncpy(m_name, name_src, size);
         m_name[size] = '\0';
       }
       else {
-        delete[] m_name;
-        m_name = nullptr;
         m_name = new char[max_name_length + 1];
         strncpy(m_name, name_src, max_name_length);
         m_name[max_name_length] = '\0';
@@ -95,8 +91,6 @@ namespace aid {
 
   Good::Good(const Good & good_src) {
     strcpy(m_sku, good_src.m_sku);
-    //if (m_name != nullptr) delete[] m_name; //??
-    m_name = nullptr;
     name(good_src.m_name);
     strcpy(m_unit, good_src.m_unit);
     m_qty = good_src.m_qty;
@@ -112,6 +106,8 @@ namespace aid {
 
   Good& Good::operator=(const Good& good_src) {
     strcpy(m_sku, good_src.m_sku);
+    delete[] this->m_name;
+    this->m_name = nullptr;
     name(good_src.m_name);
     strcpy(m_unit, good_src.m_unit);
     m_qty = good_src.m_qty;
@@ -165,34 +161,38 @@ namespace aid {
     int qtyN;
     file.open(filename, ios::in);
     file >> sku >> name >> unit >> qty >> tax >> price >> qtyN;
+    file.clear();
+    file.close();
     *this = Good(sku, name, unit, qty, tax, price, qtyN);
     return file;
   }
 
   std::ostream & Good::write(std::ostream & os, bool linear) const {
-    if (linear == true) {
-      os.width(max_sku_length);
-      os << left << m_sku << "|";
-      os.width(20);
-      os << left << m_name << "|";
-      os.width(7);
-      os << fixed << setprecision(2);
-      os << right << itemCost() << "|";
-      os.width(4);
-      os << right << m_qty << "|";
-      os.width(10);
-      os << left << m_unit << "|";
-      os.width(4);
-      os << right <<m_qtyNeeded << "|";
-    }
-    else {
-      os << "Sku: " << m_sku << endl
-        << "Name (no spaces): " << m_name << endl
-        << "Price: " << m_price << endl;
-      if (m_isTaxed == true) os << "Price after tax: " << itemCost() << endl;
-      else os << "N/A" << endl;
-      os << "Quantity on hand: " << m_qty << endl
-        << "Quantity needed: " << m_qtyNeeded << endl;
+    if(!isEmpty()) {
+      if (linear == true) {
+        os.width(max_sku_length);
+        os << left << m_sku << "|";
+        os.width(20);
+        os << left << m_name << "|";
+        os.width(7);
+        os << fixed << setprecision(2);
+        os << right << itemCost() << "|";
+        os.width(4);
+        os << right << m_qty << "|";
+        os.width(10);
+        os << left << m_unit << "|";
+        os.width(4);
+        os << right <<m_qtyNeeded << "|";
+      }
+      else {
+        os << "Sku: " << m_sku << endl
+          << "Name (no spaces): " << m_name << endl
+          << "Price: " << m_price << endl;
+        if (m_isTaxed == true) os << "Price after tax: " << itemCost() << endl;
+        else os << "N/A" << endl;
+        os << "Quantity on hand: " << m_qty << endl
+          << "Quantity needed: " << m_qtyNeeded << endl;
+      }
     }
     return os;
   }
@@ -254,7 +254,7 @@ namespace aid {
       }
     }
     else {
-      is.setstate(std::ios::failbit);
+      is.setstate(ios::failbit);
       this->m_errorState.message("Only (Y)es or (N)o are acceptable");
     }
 
