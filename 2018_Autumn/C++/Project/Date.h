@@ -30,6 +30,9 @@ namespace aid {
   public:
     Date();
     Date(int, int, int);
+    int year();
+    int month();
+    int day();
     bool operator==(const Date&) const;
     bool operator!=(const Date&) const;
     bool operator<(const Date&) const;

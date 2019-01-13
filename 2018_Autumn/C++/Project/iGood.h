@@ -1,11 +1,9 @@
-// Name: Semin Jeon
-// Date: 2018/11/22
-
 #ifndef IGOOD_H_
 #define IGOOD_H_
 
 #include <fstream>
 #include <iostream>
+
 
 namespace aid {
   class iGood {

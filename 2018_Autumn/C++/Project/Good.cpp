@@ -5,7 +5,7 @@
 
 #include <iomanip>
 #include <cstring>
-#include "Error.h"
+#include <string>
 #include "Good.h"
 
 using namespace std;
@@ -20,8 +20,12 @@ namespace aid {
     m_price = 0.0;
     m_isTaxed = true;
     m_errorState.clear();
-    call_empty++; //Need to check safeEmpty wouldn't be called more than once?
   }
+
+  void Good::type_set(char type_src) {
+    m_type = type_src;
+  }
+
   void Good::name(const char * name_src) {
     int size = strlen(name_src);
     if (name_src == nullptr) {
@@ -63,11 +67,19 @@ namespace aid {
   }
 
   double Good::itemCost() const {
-    return m_isTaxed == true ? m_price * (1 + TAX) : m_price;
+    return m_isTaxed == true ? (m_price * (1 + TAX)) : m_price;
   }
 
   void Good::message(const char* message_src) {
     m_errorState.message(message_src);
+  }
+
+  const char* Good::message() const {
+    return m_errorState.message();
+  }
+
+  void Good::clearError() {
+    m_errorState.clear();
   }
 
   bool Good::isClear() const {
@@ -80,6 +92,7 @@ namespace aid {
   }
 
   Good::Good(const char* sku_src, const char* name_src, const char* unit_src, int qty_src, bool isTaxed_src, double price_src, int qtyNeeded_src) {
+    type_set();
     strcpy(m_sku, sku_src);
     name(name_src);
     strcpy(m_unit, unit_src);
@@ -114,39 +127,39 @@ namespace aid {
     m_isTaxed = good_src.m_isTaxed;
     m_price = good_src.m_price;
     m_qtyNeeded = good_src.m_qtyNeeded;
-
+    m_errorState.message(good_src.m_errorState.message());
     return *this;
   }
 
-  bool Good::operator==(const char * sku_src) {
+  bool Good::operator==(const char * sku_src) const {
     bool same;
     if (strcmp(m_sku, sku_src) == 0) same = true;
     else same = false;
     return same;
   }
 
-  bool Good::operator>(const char * sku_src) {
+  bool Good::operator>(const char * sku_src) const {
   return (m_sku > sku_src)? true : false;
   }
 
-  bool Good::operator>(const Good & good_src) {
-    return (m_name > good_src.m_name)? true : false;
+  bool Good::operator>(const iGood & igood_src) const {
+    return (m_name > igood_src.name())? true : false;
   }
 
   int Good::operator+=(int add_qty) {
     return (add_qty > 0)? (m_qty + add_qty) : m_qty;
   }
 
-  std::fstream & Good::store(std::fstream & file, bool newLine) const {
+  std::fstream & Good::store(std::fstream & file, bool newLine) const {//?????????
     if (!this->isEmpty()) {
-      file.open(filename, ios::out | ios::app);
-      file << this->sku() << "," << this->name() << "," << this->unit() << "," <<
-        (this->taxed() ? 1 : 0) << "," << fixed << setprecision(2) << this->itemPrice() << "," << this->quantity() << "," <<
-        this->qtyNeeded();
+      //file.open("good.txt", ios::out | ios::app);
+      file << m_type << "," << m_sku << "," << m_name << "," << m_unit << "," <<
+        m_isTaxed << ","  << m_price << "," << m_qty << "," <<
+        m_qtyNeeded;
       if (newLine)
         file << "\n";
-      file.clear();
-      file.close();
+      //file.clear(); << fixed << setprecision(2)
+      //file.close();
     }
     return file;
   }
@@ -155,15 +168,15 @@ namespace aid {
     char sku[max_sku_length + 1];
     char name[max_name_length + 1];
     char unit[max_unit_length + 1];
-    int qty;
-    bool tax;
-    char price;
-    int qtyN;
-    file.open(filename, ios::in);
-    file >> sku >> name >> unit >> qty >> tax >> price >> qtyN;
-    file.clear();
-    file.close();
+    int qty, qtyN;
+    double price; bool tax; char bin;
+
+    file.getline(sku, max_sku_length, ',');
+    file.getline(name, max_name_length, ',');
+    file.getline(unit, max_unit_length, ',');
+    file >> tax >> bin >> price >> bin >> qty >> bin >> qtyN >> bin;
     *this = Good(sku, name, unit, qty, tax, price, qtyN);
+
     return file;
   }
 
@@ -185,15 +198,16 @@ namespace aid {
         os << right <<m_qtyNeeded << "|";
       }
       else {
-        os << "Sku: " << m_sku << endl
-          << "Name (no spaces): " << m_name << endl
-          << "Price: " << m_price << endl;
-        if (m_isTaxed == true) os << "Price after tax: " << itemCost() << endl;
-        else os << "N/A" << endl;
-        os << "Quantity on hand: " << m_qty << endl
-          << "Quantity needed: " << m_qtyNeeded << endl;
+        os << " Sku: " << m_sku << endl
+          << " Name (no spaces): " << m_name << endl
+          << " Price: " << m_price << endl;
+        if (m_isTaxed == true) os << " Price after tax: " << itemCost() << endl;
+        else os << " Price after tax:  N/A" << endl;
+        os << " Quantity on Hand: " << m_qty <<" " << m_unit << endl
+          << " Quantity needed: " << m_qtyNeeded;
       }
     }
+    else os << m_errorState.message();
     return os;
   }
 
@@ -201,43 +215,44 @@ namespace aid {
     char sku[max_sku_length + 1];
     char name[max_name_length + 1];
     char unit[max_unit_length + 1];
-    
-    std::cout << " Sku: "; 
+
+    std::cout << " Sku: ";
     is >> sku;
-    cin.get();
+    //cin.get();
     std::cout << " Name (no spaces): ";
     is >> name;
-    cin.get();
+    //cin.get();
     std::cout << " Unit: ";
     is >> unit;
-    cin.get();
+    //cin.get();
     Good tmp(sku, name, unit);
 
     char tax;
     std::cout << " Taxed? (y/n): ";
     is >> tax;
-    cin.get();
+    //cin.get();
     if (tax == 'y' || tax == 'Y' || tax == 'n' || tax == 'N') {
       if (tax == 'y' || tax == 'Y') tmp.m_isTaxed = true;
       else if (tax == 'n' || tax == 'N') tmp.m_isTaxed = false;
       double price = -1.23;
       std::cout << " Price: ";
       is >> price;
-      cin.get();
+      //cin.get();
       if (price > 0) {
         tmp.m_price = price;
         int qty = -1;
         std::cout << " Quantity on hand: ";
         is >> qty;
-        cin.get();
+        //cin.get();
         if (qty > 0) {
           tmp.m_qty = qty;
           int qtyN = -1;
           std::cout << " Quantity needed: ";
           is >> qtyN;
-          cin.get();
+          //cin.get();
           if (qtyN > 0) {
             tmp.m_qtyNeeded = qtyN;
+            is.ignore(100, '\n');
             *this = tmp;
           }
           else {
@@ -270,7 +285,7 @@ namespace aid {
   }
 
   bool Good::isEmpty() const { //check after call empty;
-    return call_empty > 0? true : false;
+    return m_name == nullptr || m_name[0] == '\0';
   }
 
   int Good::qtyNeeded() const {
@@ -281,18 +296,18 @@ namespace aid {
     return m_qty;
   }
 
-  std::ostream & operator<<(std::ostream& os, const Good & good_src) {
-    good_src.write(os, true); //should it be true?
+  std::ostream & operator<<(std::ostream& os, const iGood & igood_src) {
+    igood_src.write(os, true);
     return os;
   }
 
-  std::istream & operator>>(std::istream& is, Good & good_src) {
-    good_src.read(is);
+  std::istream & operator>>(std::istream& is, iGood & igood_src) {
+    igood_src.read(is);
     return is;
   }
 
-  double operator+=(double & add_price, const Good & good_src) {
-    add_price += good_src.total_cost();
+  double operator+=(double & add_price, const iGood & igood_src) {
+    add_price += igood_src.total_cost();
     return add_price;
   }
 }

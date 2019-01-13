@@ -5,17 +5,18 @@
 
 #ifndef GOOD_H_
 #define GOOD_H_
+#include "iGood.h"
 #include <fstream>
 #include <iostream>
 #include "Error.h"
 
 namespace aid {
-  #define max_sku_length 7
-  #define max_unit_length 10
-  #define max_name_length 75
-  #define TAX 0.13
-  class Good {
-  private: // Data members
+  const int max_sku_length = 7;
+  const int max_unit_length = 10;
+  const int max_name_length = 75;
+  const double TAX = 0.13;
+  class Good : public iGood {
+  private: // Data members & private functions
     char m_type;
     char m_sku[max_sku_length + 1];
     char m_unit[max_unit_length + 1];
@@ -25,11 +26,11 @@ namespace aid {
     double m_price;
     bool m_isTaxed;
     Error m_errorState;
-    void safeEmpty();
-    int call_empty = 0;
-    const char* filename;//???
+    void safeEmpty();    
 
   protected: // Member Functions
+    //const char* filename;//pointer for file stream
+    void type_set(char type_src = 'N'); //m_type setter
     void name(const char* name_src);
     const char* name() const;
     const char* sku() const;
@@ -38,6 +39,8 @@ namespace aid {
     double itemPrice() const;
     double itemCost() const;
     void message(const char* message_src);
+    const char* message() const;
+    void clearError();
     bool isClear() const;
 
   public: // Constructors, destructor, member operators, member functions
@@ -54,9 +57,9 @@ namespace aid {
     // Member Operators
     // Copy assignment operator
     Good& operator=(const Good& good_src);
-    bool operator==(const char* sku_src);
-    bool operator>(const char* sku_src);
-    bool operator>(const Good& good_src);
+    bool operator==(const char* sku_src) const;
+    bool operator>(const char* sku_src) const;
+    bool operator>(const iGood& igood_src) const;
     int operator+=(int add_qty);
 
     // Member Functions
@@ -71,8 +74,8 @@ namespace aid {
     int quantity() const;
   };
   // Helper Functions
-  std::ostream& operator<<(std::ostream& os, const Good& good_src);
-  std::istream& operator>>(std::istream& is, Good& good_src);
-  double operator+=(double& add_price, const Good& good_src);
+  std::ostream& operator<<(std::ostream& os, const iGood& igood_src);
+  std::istream& operator>>(std::istream& is, iGood& igood_src);
+  double operator+=(double& add_price, const iGood& igood_src);
 }
 #endif // !GOOD_H_

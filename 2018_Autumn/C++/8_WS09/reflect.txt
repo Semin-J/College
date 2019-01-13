@@ -1,0 +1,21 @@
+1. What happens if you try to put your templated functions in Data.cpp? Does your source code compile if you move all functions to Data.h? Explain.
+  1) Actually, when I tried templated function's declaration in header file and implemenation file in cpp file, it worked. However, as I googled it,
+templated functions are not function acutally, they are "patterns". So compiler check the templated function's pattern, how it looks like,
+and then generate specified code when it was used in certain part of client code.
+
+  2) When we move all implementation codes to header file, and compile the header file together, they compiled perfectly,
+because all source codes that are needed by client code were implemented perfectly. For codes, the source of codes doesn't matter, whether that is cpp or header file.
+
+
+2. Move one templated function into ws9_lab.cpp. Does it work now? Do you need to define the template function above main(), before it is used, or can you define it below main()?
+  - If the templated function doesn't affect to another function in header file, when the templated function above main, that works.
+However, below main, it doesn't work. Because as said above, template is pattern. So it should be placed above of its own use in main.
+
+3. Could you have done this lab without templates, by just overloading your functions in Data.h to accept integer and double arguments? What is the advantage of using templates?
+  - Technically, can finish this lab without templates. But overloading by parameter types over and over for each functions, there should be bunch of redudant codes and not effectived at all. Using templates is way more effective way to code for same functions have just different type of parameters.
+
+4. Are the following equivalent?  template<class T>  template<typename T>
+  - By the course note, they are equivalent. But as I googled it, they have no semantic difference,
+however, typename can give a hint to compiler in dependent case.
+Furthermore, the c++ maker Stroustrup liked class keyword(it means, class is old keyword for template),
+somehow, standardize body decide to use typename additionally, not to get confused with same name but different concept. 

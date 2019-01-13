@@ -53,6 +53,18 @@ namespace aid {
       this->safe_set();
   }
 
+  int Date::year() {
+    return m_year;
+  }
+
+  int Date::month() {
+    return m_month;
+  }
+
+  int Date::day() {
+    return m_day;
+  }
+
   bool Date::operator==(const Date& rhs) const {
     bool correct;
     if (m_year != 0 && rhs.m_year != 0) {
@@ -138,21 +150,11 @@ namespace aid {
     int t_day=0;
     char bin;
     istr >> t_year >> bin >> t_month >> bin >> t_day;
-    //istr.get();
-    /*istr >> t_month;
-    istr.get();
-    istr >> t_day;*/
 
     if (istr.fail() == false)
       *this = Date(t_year, t_month, t_day);
       
     else {
-      /*if (t_year > min_date && t_year < max_year && t_month >= 1 && t_month <= 12
-          && t_day <= mdays(t_month, t_year) && t_day >= 1) {
-        m_year = t_year;
-        m_month = t_month;
-        m_day = t_day;
-      } */
       safe_set();
       errState = CIN_FAILED;
     }
@@ -160,8 +162,6 @@ namespace aid {
   }
 
   std::ostream& Date::write(std::ostream& ostr) const {
-    /*ostr.fill('0');
-    ostr.width(4); */
     ostr << m_year << "/";
     ostr.fill('0');
     ostr.width(2);
@@ -169,6 +169,7 @@ namespace aid {
     ostr.fill('0');
     ostr.width(2);
     ostr << m_day;
+    ostr.fill(' ');
     return ostr;
   }
 
