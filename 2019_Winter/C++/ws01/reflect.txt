@@ -1,0 +1,25 @@
+1. The difference between internal and external linkage using examples from your code
+-> I used 'extern' and 'static' keywords for external and internal linkage.
+Declared the variable using 'extern' in String.cpp and declared outside of main of w1.cpp and initialized inside of main.
+And possible to use 'extern'ed variable inside of String.cpp file.
+And assign the 'extern'ed variable to 'static' local variable inside of operator<<.
+'static'ed variable hold changed value, since they were called.
+
+2. The execution effect of the code in the process() function that creates the String object
+which is inserted into standard output (which member function(s) does this code call)
+-> When execute process(), the constructor of String is called and initialized the data member and allocate memory dynamically.
+And the String object is printed out with operator<< which calls display() in String class.
+
+3. The changes that you made in upgrading your String class.
+-> To get various size parameters, used dynamic memory allocation for instance variable of String class, changing the data member as char pointer.
+When there is no extra argument from outside of main but file name,  set the data member as a nullptr.
+And made destructor and let delete the allocated memory before the program finished.
+
+**Quiz Reflection**
+Q4. Write the declaration for the move assignment operator in the definition of a class named Car.  You do not need to write the implementation.
+-> class Car {
+	Car& operator=(car&& src){ }
+}
+
+Q5. Write the declaration for an enumeration called "Color" where the numeric list starts with a value of 5 and contains the labels White, Red, Orange and Green.
+-> enum Color {White=5, Red, Orange, Green};
