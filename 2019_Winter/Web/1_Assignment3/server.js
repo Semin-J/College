@@ -1,7 +1,7 @@
 /************************************************************************
 *  WEB322 – Assignment03
 * 
-*  Name: Semin Jeon, Student ID: 146453162, Date: 2019-2-26
+*  Name: Semin Jeon, Date: 2019-2-26
 *
 *  Online (Heroku) Link: https://gentle-mesa-20820.herokuapp.com/
 *
