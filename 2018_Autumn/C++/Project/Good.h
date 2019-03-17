@@ -7,7 +7,6 @@
 #define GOOD_H_
 #include "iGood.h"
 #include <fstream>
-#include <iostream>
 #include "Error.h"
 
 namespace aid {
