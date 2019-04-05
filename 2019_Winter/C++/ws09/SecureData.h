@@ -1,6 +1,6 @@
 // Workshop 9 - Multi-Threading
 // SecureData.h
-// Chris Szalwinski after Cornel Barna
+// Given file
 // 2019/03/19
 
 #ifndef SICT_SECUREDATA_H

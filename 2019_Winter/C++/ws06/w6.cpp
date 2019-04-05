@@ -1,6 +1,6 @@
 // Workshop 6 - STL Containers
 // w6.cpp
-// Chris Szalwinski
+// Given File
 // 2019/03/03
 
 #include <iostream>

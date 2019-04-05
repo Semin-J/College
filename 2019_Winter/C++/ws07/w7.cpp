@@ -1,7 +1,6 @@
 // Workshop 7 - STL Algorithms
 // w7.cpp
-// updated by Cornel on 18.10.2018
-// updated by Chris Szalwinski 
+// Given File
 // 2019/03/10
 
 #include <iostream>

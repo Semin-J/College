@@ -1,6 +1,6 @@
 // Workshop 9 - Multi-Threading
 // w9.cpp
-// Chris Szalwinski after Cornel Barna
+// Given file
 // 2019/03/19
 
 #include <iostream>

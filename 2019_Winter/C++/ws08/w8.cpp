@@ -1,6 +1,6 @@
 // Workshop 8 - Smart Pointers
 // w8.cpp
-// Chris Szalwinski from Cornel Barna
+// Given file
 // 2019/03/17
 
 #include <iostream>

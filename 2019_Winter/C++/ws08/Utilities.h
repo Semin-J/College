@@ -2,7 +2,7 @@
 #define SICT_UTILITIES_H
 // Workshop 8 - Smart Pointers
 // Utilities.h
-// Chris Szalwinski from Cornel Barna
+// Given File
 // 2019/03/17
 
 #include "List.h"

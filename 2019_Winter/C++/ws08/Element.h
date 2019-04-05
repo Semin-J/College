@@ -3,7 +3,7 @@
 // Semin Jeon (146453162)
 // Workshop 8 - Smart Pointers
 // Element.h
-// Chris Szalwinski from Cornel Barna
+// Half given file
 // 2019/03/17
 
 #include <iomanip>

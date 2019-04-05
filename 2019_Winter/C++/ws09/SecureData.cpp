@@ -1,7 +1,7 @@
 // Semin Jeon(146453162)
 // Workshop 9 - Multi-Threading
 // SecureData.cpp
-// Chris Szalwinski after Cornel Barna
+// Half given file
 // 2019/03/19
 
 #include <iostream>

@@ -1,5 +1,4 @@
 // name: Semin Jeon
-// Student ID: 146453162 (sjeon18@myseneca.ca)
 // Date: 2019-03-16
 // WS07: STL Algorithms
 

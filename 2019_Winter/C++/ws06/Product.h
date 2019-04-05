@@ -1,5 +1,4 @@
 // Name: Semin Jeon
-// Student ID: 146453162 (sjeon18@myseneca.ca)
 // Date: 2019-03-05
 // WS06: STL containers
 
