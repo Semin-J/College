@@ -1,0 +1,9 @@
+Quiz Reflection
+4. What is the communication?
+-> Communication refers to the transfer of information to or from a processor.
+10. What is the vectoriztion?
+-> Vectorization is the register-based technique that implements a single instruction multiple data scenario. It takes advantage of any vector registers available within a CPU.
+
+Reflection
+-> Using std::ios::binary, open the text the file as a binary file, and read the each character as a byte and counted the byte to do memory allocations after that.
+Not to be trapped by \n\r in Windows, I needed to count the characters byte by byte. Using functor, I passed the one function to the other as a parameter, and bound the two functions at a time. And included <thread> and created 3 threads and make the process work thread by thread, and then let them join when the threads finished their works.
